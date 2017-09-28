@@ -298,7 +298,7 @@
       <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator"></i>
 
       <slot name="spinner">
-        <div class="spinner" v-show="mutableLoading">Loading...</div>
+        <div class="spinner" v-show="mutableLoading">{{loadingText}}</div>
       </slot>
     </div>
 
@@ -310,7 +310,7 @@
           </a>
         </li>
         <li v-if="!filteredOptions.length" class="no-options">
-          <slot name="no-options">Sorry, no matching options.</slot>
+          <slot name="no-options">{{ noSearch }}</slot>
         </li>
       </ul>
     </transition>
@@ -385,6 +385,24 @@
       placeholder: {
         type: String,
         default: ''
+      },
+
+      /**
+       * Equivalent to the `noSearch` attribute on an `<input>`.
+       * @type {Object}
+       */
+      noSearch: {
+        type: String,
+        default: 'Sorry, no matching options.'
+      },
+
+      /**
+       * Equivalent to the `noSearch` attribute on an `<input>`.
+       * @type {Object}
+       */
+      loadingText: {
+        type: String,
+        default: 'Loading...'
       },
 
       /**
@@ -806,7 +824,7 @@
        */
       clearSearchOnBlur() {
         return this.clearSearchOnSelect && !this.multiple
-      },  
+      },
 
       /**
        * Return the current state of the
