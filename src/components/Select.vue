@@ -49,6 +49,7 @@
   }
   /* Dropdown Toggle */
   .v-select .dropdown-toggle {
+    clear: both;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -304,7 +305,11 @@
 
     <transition :name="transition">
       <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ 'max-height': maxHeight }">
-        <li v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ active: isOptionSelected(option), highlight: index === typeAheadPointer }" @mouseover="typeAheadPointer = index">
+        <li
+          v-for="(option, index) in filteredOptions"
+          v-bind:key="index"
+          :class="{ active: isOptionSelected(option), highlight: index === typeAheadPointer }"
+          @mouseover="typeAheadPointer = index">
           <a @mousedown.prevent="select(option)">
             {{ getOptionLabel(option) }}
           </a>
