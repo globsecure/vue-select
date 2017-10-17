@@ -1,4 +1,19 @@
 <style>
+  .v-select-border-red {
+    border: 1px solid rgba(255, 0, 0, .40) !important;
+  }
+  .v-select-border-green {
+    border: 1px solid rgba(0, 159, 0, .40) !important;
+  }
+  .v-select-border-blue {
+    border: 1px solid rgba(0, 204, 204, .60) !important;
+  }
+  .v-select-border-black {
+    border: 1px solid rgba(0, 0, 0, .40) !important;
+  }
+  .v-select-border-grey {
+    border: 1px solid rgba(0, 0, 0, .40) !important;
+  }
   .v-select {
     position: relative;
     font-family: sans-serif;
@@ -112,6 +127,7 @@
     border-radius: 4px;
     height: 26px;
     margin: 4px 1px 0px 3px;
+    overflow-x: scroll;
     padding: 1px 0.25em;
     float: left;
     line-height: 24px;
@@ -268,32 +284,46 @@
 
 <template>
   <div class="dropdown v-select" :class="dropdownClasses">
-    <div ref="toggle" @mousedown.prevent="toggleDropdown" class="dropdown-toggle">
 
-      <span class="selected-tag" v-for="option in valueAsArray" v-bind:key="option.index">
+    <div
+      ref="toggle"
+      @mousedown.prevent="toggleDropdown"
+      :class="`v-select-border-${color} dropdown-toggle`">
+
+      <span
+        class="selected-tag"
+        v-for="option in valueAsArray"
+        v-bind:key="option.index">
+
         {{ getOptionLabel(option) }}
-        <button v-if="multiple" @click="deselect(option)" type="button" class="close" aria-label="Remove option">
+
+        <button
+          v-if="multiple"
+          @click="deselect(option)"
+          type="button"
+          class="close"
+          aria-label="Remove option">
           <span aria-hidden="true">&times;</span>
         </button>
       </span>
 
       <input
-              ref="search"
-              v-model="search"
-              @keydown.delete="maybeDeleteValue"
-              @keyup.esc="onEscape"
-              @keydown.up.prevent="typeAheadUp"
-              @keydown.down.prevent="typeAheadDown"
-              @keyup.enter.prevent="typeAheadSelect"
-              @blur="onSearchBlur"
-              @focus="onSearchFocus"
-              type="search"
-              class="form-control"
-              :placeholder="searchPlaceholder"
-              :readonly="!searchable"
-              :style="{ width: isValueEmpty ? '100%' : 'auto' }"
-              :id="inputId"
-              aria-label="Search for option"
+        ref="search"
+        v-model="search"
+        @keydown.delete="maybeDeleteValue"
+        @keyup.esc="onEscape"
+        @keydown.up.prevent="typeAheadUp"
+        @keydown.down.prevent="typeAheadDown"
+        @keyup.enter.prevent="typeAheadSelect"
+        @blur="onSearchBlur"
+        @focus="onSearchFocus"
+        type="search"
+        class="form-control"
+        :placeholder="searchPlaceholder"
+        :readonly="!searchable"
+        :style="{ width: isValueEmpty ? '100%' : 'auto' }"
+        :id="inputId"
+        aria-label="Search for option"
       >
 
       <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator"></i>
@@ -304,7 +334,12 @@
     </div>
 
     <transition :name="transition">
-      <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ 'max-height': maxHeight }">
+      <ul
+        ref="dropdownMenu"
+        v-if="dropdownOpen"
+        class="dropdown-menu"
+        :style="{ 'max-height': maxHeight }">
+
         <li
           v-for="(option, index) in filteredOptions"
           v-bind:key="index"
@@ -314,9 +349,11 @@
             {{ getOptionLabel(option) }}
           </a>
         </li>
+
         <li v-if="!filteredOptions.length" class="no-options">
-          <slot name="no-options">{{ noSearch }}</slot>
+          <slot name="no-options">{{ noMatching }}</slot>
         </li>
+
       </ul>
     </transition>
   </div>
@@ -393,16 +430,25 @@
       },
 
       /**
-       * Equivalent to the `noSearch` attribute on an `<input>`.
+       * Color class css.
        * @type {Object}
        */
-      noSearch: {
+      color: {
+        type: String,
+        default: 'black'
+      },
+
+      /**
+       * Sentence when the search term is not found.
+       * @type {Object}
+       */
+      noMatching: {
         type: String,
         default: 'Sorry, no matching options.'
       },
 
       /**
-       * Equivalent to the `noSearch` attribute on an `<input>`.
+       * Phrase when searching or loading.
        * @type {Object}
        */
       loadingText: {
