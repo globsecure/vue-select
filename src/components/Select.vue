@@ -917,6 +917,10 @@
       filteredOptions() {
         let options = this.mutableOptions.filter((option) => {
           if (typeof option === 'object' && option.hasOwnProperty(this.label)) {
+
+            console.log('Option: ', option[this.label].replace(/[-+=()\s]/g, '').replace(/[\\]/g, '/'))
+            console.log('Value: ', this.search.replace(/[-+=()\s]/g, '').replace(/[\\]/g, '/'))
+
             return option[this.label].replace(/[-+=()\s]/g, '').replace(/[\\]/g, '/').toLowerCase().indexOf(this.search.replace(/[-+=()\s]/g, '').replace(/[\\]/g, '/').toLowerCase()) > -1
           } else if (typeof option === 'object' && !option.hasOwnProperty(this.label)) {
             return console.warn(`[vue-select warn]: Label key "option.${this.label}" does not exist in options object.\nhttp://sagalbot.github.io/vue-select/#ex-labels`)
