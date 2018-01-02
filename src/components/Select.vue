@@ -14,6 +14,9 @@
   .v-select-border-grey {
     border: 1px solid rgba(0, 0, 0, .40) !important;
   }
+  .is-error .v-select-border-green{
+    border: solid 1px #FF0000 !important;
+  }
   .v-select {
     position: relative;
     font-family: sans-serif;
