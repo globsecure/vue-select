@@ -308,81 +308,40 @@
 </style>
 
 <template>
-<<<<<<< HEAD
-  <div class="dropdown v-select" :class="dropdownClasses">
-
-    <div
-      ref="toggle"
-      @mousedown.prevent="toggleDropdown"
-      :class="`v-select-border-${color} dropdown-toggle`">
-
-      <span
-        class="selected-tag"
-        v-for="option in valueAsArray"
-        v-bind:key="option.index">
-
-        {{ getOptionLabel(option) }}
-
-        <button
-          v-if="multiple"
-          @click="deselect(option)"
-          type="button"
-          class="close"
-          aria-label="Remove option">
-=======
   <div :dir="dir" class="dropdown v-select" :class="dropdownClasses">
-    <div ref="toggle" @mousedown.prevent="toggleDropdown" :class="['dropdown-toggle', 'clearfix']">
+    <div ref="toggle"
+      @mousedown.prevent="toggleDropdown"
+      :class="['dropdown-toggle', 'clearfix', `v-select-border-${color}`]">
 
       <span class="selected-tag" v-for="option in valueAsArray" v-bind:key="option.index">
         <slot name="selected-option" v-bind="option">
           {{ getOptionLabel(option) }}
         </slot>
         <button v-if="multiple" :disabled="disabled" @click="deselect(option)" type="button" class="close" aria-label="Remove option">
->>>>>>> upstream/master
           <span aria-hidden="true">&times;</span>
         </button>
       </span>
 
       <input
-<<<<<<< HEAD
         ref="search"
         v-model="search"
         @keydown.delete="maybeDeleteValue"
         @keyup.esc="onEscape"
         @keydown.up.prevent="typeAheadUp"
         @keydown.down.prevent="typeAheadDown"
-        @keyup.enter.prevent="typeAheadSelect"
+        @keydown.enter.prevent="typeAheadSelect"
         @blur="onSearchBlur"
         @focus="onSearchFocus"
         type="search"
         class="form-control"
+        autocomplete="false"
+        :disabled="disabled"
         :placeholder="searchPlaceholder"
+        :tabindex="tabindex"
         :readonly="!searchable"
         :style="{ width: isValueEmpty ? '100%' : 'auto' }"
         :id="inputId"
-        aria-label="Search for option"
-=======
-              ref="search"
-              v-model="search"
-              @keydown.delete="maybeDeleteValue"
-              @keyup.esc="onEscape"
-              @keydown.up.prevent="typeAheadUp"
-              @keydown.down.prevent="typeAheadDown"
-              @keydown.enter.prevent="typeAheadSelect"
-              @blur="onSearchBlur"
-              @focus="onSearchFocus"
-              type="search"
-              class="form-control"
-              autocomplete="false"
-              :disabled="disabled"
-              :placeholder="searchPlaceholder"
-              :tabindex="tabindex"
-              :readonly="!searchable"
-              :style="{ width: isValueEmpty ? '100%' : 'auto' }"
-              :id="inputId"
-              aria-label="Search for option"
->>>>>>> upstream/master
-      >
+        aria-label="Search for option">
 
       <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator"></i>
 
